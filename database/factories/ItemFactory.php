@@ -18,7 +18,7 @@ class ItemFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
+            'description' => fake()->sentence(),
         ];
     }
 }
