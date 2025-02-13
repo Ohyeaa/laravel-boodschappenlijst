@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateItemRequest;
+use App\Http\Requests\StoreItemRequest;
 use Illuminate\Http\Request;
 use App\Models\Item;
 
@@ -29,9 +31,18 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreItemRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Item::create($validated);
+        /** WITHOUT MASS ASSIGNMENT INSTEAD OF Item::create
+         * $item = new Item;
+         * $item->name = $validated['name'];
+         * $item->description = $validated['description'];
+         * $item->save();
+         */
+        return redirect()->route('items.index');
     }
 
     /**
@@ -47,15 +58,27 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $item = Item::find($id);
+        return view('items.edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateItemRequest $request, Item $item)
     {
-        //
+        $validated = $request->validated();
+
+        Item::create($validated);
+
+        /** WITHOUT MASS ASSIGNMENT INSTEAD OF Item::create
+         * $item->name = $validated['name'];
+         * $item->description = $validated['description'];
+         * $item->save(); 
+         */
+      
+
+        return redirect()->route('items.index');
     }
 
     /**

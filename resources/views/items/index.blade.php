@@ -23,7 +23,8 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit">Delete</button>
-                        </form></td>   
+                        </form></td>
+                    <td><a href="{{ route('items.edit', $item->id) }}">Edit</a></td>
                 </tr>
             @endforeach
         </tbody>
