@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->word,
             'description' => fake()->sentence(),
+            'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

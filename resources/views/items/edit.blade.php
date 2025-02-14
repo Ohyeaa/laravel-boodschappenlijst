@@ -16,6 +16,14 @@
         <textarea name="description" id="description">{{ $item->description }}</textarea>
         <br>
 
+        <label for="category"></label>
+        <select name="category_id" id="category" required>
+            @foreach($categories as $category)
+                <option value=" {{ $category->id }}" {{ $item->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+            @endforeach
+        </select>
+        <br>
+
         <button type="submit">Save Changes</button>
     </form>
 @endsection

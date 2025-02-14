@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateItemRequest;
 use App\Http\Requests\StoreItemRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Item;
 
@@ -15,7 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::with('Category')->get();
         //dd($items);
         return view('items.index', compact('items'));
     }
@@ -25,7 +26,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        return view('items.create');
+        $categories = Category::all();
+        return view('items.create', compact('categories'));
     }
 
     /**
@@ -56,10 +58,11 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Item $item)
     {
-        $item = Item::find($id);
-        return view('items.edit', compact('item'));
+        $categories = Category::all();
+
+        return view('items.edit', compact('item', 'categories')); // without route model binding also id funcparam and $item = Item::find($id);
     }
 
     /**
@@ -69,14 +72,7 @@ class ItemController extends Controller
     {
         $validated = $request->validated();
 
-        Item::create($validated);
-
-        /** WITHOUT MASS ASSIGNMENT INSTEAD OF Item::create
-         * $item->name = $validated['name'];
-         * $item->description = $validated['description'];
-         * $item->save(); 
-         */
-      
+        $item->update($validated); // possible due to mass assignment, otherwise similar to store method notes
 
         return redirect()->route('items.index');
     }

@@ -10,14 +10,17 @@
             <tr>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Actions</th>
+                <th>Category</th>
+                <th>Delete</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
             @foreach($items as $item)
                 <tr>
-                    <td> {{ $item->name }} </td>
-                    <td> {{ $item->description }} </td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->description }}</td>
+                    <td>{{ $item->category->name }}</td>
                     <td>
                         <form action="{{ route('items.destroy', $item->id) }}" method="POST">
                             @csrf
