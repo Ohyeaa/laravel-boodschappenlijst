@@ -62,3 +62,4 @@ class CategoryController extends Controller
         //
     }
 }
+

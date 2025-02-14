@@ -37,13 +37,8 @@ class ItemController extends Controller
     {
         $validated = $request->validated();
 
-        Item::create($validated);
-        /** WITHOUT MASS ASSIGNMENT INSTEAD OF Item::create
-         * $item = new Item;
-         * $item->name = $validated['name'];
-         * $item->description = $validated['description'];
-         * $item->save();
-         */
+        Item::create($validated);                        //without mass assign: replace with new instance, then assign with e.g. $item->name = $validated['name] and save() it
+      
         return redirect()->route('items.index');
     }
 
@@ -62,7 +57,7 @@ class ItemController extends Controller
     {
         $categories = Category::all();
 
-        return view('items.edit', compact('item', 'categories')); // without route model binding also id funcparam and $item = Item::find($id);
+        return view('items.edit', compact('item', 'categories'));               // without route model binding: also id funcparam and $item = Item::find($id);
     }
 
     /**
@@ -72,7 +67,7 @@ class ItemController extends Controller
     {
         $validated = $request->validated();
 
-        $item->update($validated); // possible due to mass assignment, otherwise similar to store method notes
+        $item->update($validated);                                              // possible due to mass assignment, otherwise code similar to store method-note
 
         return redirect()->route('items.index');
     }
